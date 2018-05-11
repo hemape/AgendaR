@@ -36,8 +36,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // Fragment
+                fm = getSupportFragmentManager();
+                fm.popBackStack();
+                ft = fm.beginTransaction();
+                showingFragment = true;
+
+                ft.replace(R.id.fragmentBase, AnyadirTarea.newInstance("",""));
+                ft.commit();
             }
         });
 
@@ -72,10 +78,13 @@ public class MainActivity extends AppCompatActivity
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (showingFragment){
+        } else if(showingFragment){
             ft.remove(getFragmentManager().findFragmentById(R.id.fragmentBase));
             ft.commit();
             showingFragment = false;
+
+        }else{
+            super.onBackPressed();
         }
     }
 
