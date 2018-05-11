@@ -50,7 +50,7 @@ public class FragmentPrincipal extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-//hasdjh
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

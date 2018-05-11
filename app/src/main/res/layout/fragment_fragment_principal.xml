@@ -5,9 +5,17 @@
     tools:context="com.example.hector.agendarecuperacion.FragmentPrincipal">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    </android.support.v7.widget.RecyclerView>
 </FrameLayout>
