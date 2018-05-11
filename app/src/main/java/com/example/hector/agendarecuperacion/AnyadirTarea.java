@@ -4,9 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -20,6 +23,8 @@ import android.view.ViewGroup;
 public class AnyadirTarea extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    EditText fecha, hora, descripcion, nombre;
+    Button cancelar, ok;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -64,8 +69,31 @@ public class AnyadirTarea extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_anyadir_tarea, container, false);
+        View v = inflater.inflate(R.layout.fragment_anyadir_tarea, container, false);
+        fecha = v.findViewById(R.id.EditTextFecha);
+        hora = v.findViewById(R.id.EditTextHora);
+        descripcion = v.findViewById(R.id.EditTextDescripcion);
+        cancelar = v.findViewById(R.id.BotonCancelar);
+        ok = v.findViewById(R.id.BotonConfirmar);
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardar();
+            }
+        });
+        return v;
     }
+
+    private void guardar() {
+        String textofecha = fecha.getText().toString();
+        String textohora= hora.getText().toString();
+        String textodescripcion= descripcion.getText().toString();
+        String nombre="";
+
+    Evento objeto = new Evento(nombre, textofecha, textohora, textodescripcion);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
