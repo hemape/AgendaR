@@ -7,8 +7,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.EventLog;
+import android.util.Log;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class MyDBAdapter {
     private static final int DATABASE_VERSION = 1;
@@ -46,7 +50,6 @@ public class MyDBAdapter {
 
     public String guardarTarea(Evento obj) {
         String mensaje = "";
-        SQLiteDatabase database = this.getWritableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put("nombretarea", obj.getNombre());
         newValues.put("fecha_t", obj.getFecha());
@@ -54,29 +57,70 @@ public class MyDBAdapter {
         newValues.put("descripcion_t", obj.getDescripcion());
 
         try {
-            database.insertOrThrow("TAREAS", null, newValues);
+            db.insertOrThrow("TAREAS", null, newValues);
             mensaje = "Tarea ingresada correctamente";
         } catch (SQLException e) {
             mensaje = "No se ha podido ingresar la tarea";
         }
-        database.close();
+        db.close();
         return mensaje;
     }
 
+
+    // Devuelve en un array list todos los eventos
     public ArrayList llenar_Tarea() {
-        ArrayList<Evento> lista = new ArrayList<>();
-        SQLiteDatabase database = this.getWritableDatabase();
+        ArrayList<Evento> lista = new ArrayList<Evento>();
+
         String q = "SELECT * FROM TAREAS";
-        Cursor registros = database.rawQuery(q, null);
+        Cursor registros = db.rawQuery(q, null);
+
         if (registros.moveToFirst()) {
             do {
+                // Preparamos valores
+                String nombre = registros.getString(1);
+                String fecha = registros.getString(2);
+                String hora = registros.getString(3);
+                String descripcion = registros.getString(4);
 
-                lista.add(registros.getString(1));
+                // Creamos objeto
+                Evento obj = new Evento(nombre, fecha, hora, descripcion);
+
+                // Guardamos objeto a la lista
+                lista.add(obj);
             } while (registros.moveToNext());
         }
         return lista;
 
     }
+//Devuelve solo una
+    public Evento devuelveTarea(int id) {
+        String q = "SELECT * FROM TAREAS WHERE _id = '"+id+"'";
+        Cursor registros = db.rawQuery(q, null);
+
+        if (registros.moveToFirst()) {
+
+            // Preparamos valores
+            String nombre = registros.getString(1);
+            String fecha = registros.getString(2);
+            String hora = registros.getString(3);
+            String descripcion = registros.getString(4);
+
+            // Creamos objeto
+            Evento obj = new Evento(nombre, fecha, hora, descripcion);
+
+            // Guardamos objeto a la lista
+            return obj;
+
+        }else{
+            Log.d("#TEMP", "No se ha encontado el registro Nº " + id);
+            return null;
+        }
+    }
+
+    public void eliminaTarea(int id){
+        db.delete("TAREAS", "id="+id, null);
+    }
+
 
     private static class MyDbHelper extends SQLiteOpenHelper {
 
