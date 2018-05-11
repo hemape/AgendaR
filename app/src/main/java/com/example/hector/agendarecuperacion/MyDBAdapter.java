@@ -64,12 +64,13 @@ public class MyDBAdapter {
     }
 
     public ArrayList llenar_Tarea() {
-        ArrayList<String> lista = new ArrayList<>();
+        ArrayList<Evento> lista = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
         String q = "SELECT * FROM TAREAS";
         Cursor registros = database.rawQuery(q, null);
         if (registros.moveToFirst()) {
             do {
+
                 lista.add(registros.getString(1));
             } while (registros.moveToNext());
         }
