@@ -71,15 +71,12 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        android.app.FragmentManager fm;
-        android.app.FragmentTransaction ft;
-        fm = getFragmentManager();
         ft = fm.beginTransaction();
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if(showingFragment){
-            ft.remove(getFragmentManager().findFragmentById(R.id.fragmentBase));
+            ft.replace(R.id.fragmentBase, FragmentPrincipal.newInstance("",""));
             ft.commit();
             showingFragment = false;
 
