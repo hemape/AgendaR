@@ -1,5 +1,8 @@
 package com.example.hector.agendarecuperacion;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,8 +11,13 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
+
+import java.util.Calendar;
 
 
 /**
@@ -24,9 +32,15 @@ public class AnyadirTarea extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     EditText fecha, hora, descripcion, nombre;
-    Button cancelar, ok;
+    Button cancelar, ok, btnfecha, btnhora;
+    MyDBAdapter bbdd;
+    DatePickerDialog datepick;
+    TimePickerDialog timepick;
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -75,7 +89,44 @@ public class AnyadirTarea extends Fragment {
         descripcion = v.findViewById(R.id.EditTextDescripcion);
         cancelar = v.findViewById(R.id.BotonCancelar);
         ok = v.findViewById(R.id.BotonConfirmar);
+        btnfecha= v.findViewById(R.id.botonFecha);
+        btnhora = v.findViewById(R.id.botonHora);
+        bbdd = new MyDBAdapter(getContext());
+        // Creamos DatePicker
+        datepick = new DatePickerDialog(getContext());
+        datepick.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                // Accion cuando ha seleccionado una fecha
+                fecha.setText(dayOfMonth + "/" + month + "/" + year);
+            }
+        });
 
+         timepick = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                // Preuab
+                hora.setText(hourOfDay + ":" + minute);
+            }
+        }, 0,0,false);
+
+
+
+
+        btnfecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datepick.show();
+            }
+
+        });
+        btnhora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timepick.show();
+            }
+
+        });
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +143,9 @@ public class AnyadirTarea extends Fragment {
         String nombre="";
 
     Evento objeto = new Evento(nombre, textofecha, textohora, textodescripcion);
+        bbdd.guardarTarea(objeto);
     }
+
 
 
     // TODO: Rename method, update argument and hook method into UI event
