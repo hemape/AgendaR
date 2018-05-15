@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class AdapterRecyler extends RecyclerView.Adapter<AdapterRecyler.DiasTareasHolder> {
 
-    List<Evento> eventos;
+    ArrayList<Evento> eventos;
 
-    public AdapterRecyler(List<Evento>eventos){
+    public AdapterRecyler(ArrayList<Evento> eventos){
         this.eventos = eventos;
-
     }
 
 
@@ -28,7 +28,7 @@ public class AdapterRecyler extends RecyclerView.Adapter<AdapterRecyler.DiasTare
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DiasTareasHolder holder, int position) {
+    public void onBindViewHolder(final DiasTareasHolder holder, int position) {
         Evento evento =  eventos.get(position);
         holder.textViewNombre.setText(evento.getNombre());
         holder.textViewDiaTarea.setText(evento.getFecha());

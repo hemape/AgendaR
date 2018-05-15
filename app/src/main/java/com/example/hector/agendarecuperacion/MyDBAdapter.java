@@ -35,7 +35,7 @@ public class MyDBAdapter {
     public MyDBAdapter(Context c){
         context = c;
         dbHelper = new MyDbHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
-        //OJO open();
+        open();
     }
 
     public void open(){
