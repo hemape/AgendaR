@@ -2,14 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hector.agendarecuperacion.FragmentPrincipal">
+    tools:context="com.example.hector.agendarecuperacion.Fragment_Dia">
 
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerPrincipal"
+        android:id="@+id/recylcerDiaDetalle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent" />
 </FrameLayout>

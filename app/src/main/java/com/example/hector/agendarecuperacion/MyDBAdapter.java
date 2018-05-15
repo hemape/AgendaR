@@ -92,6 +92,30 @@ public class MyDBAdapter {
         return lista;
 
     }
+    // Devuelve tareas que coinciden con el día solicitado
+    public ArrayList TareasDia(String dia) {
+        ArrayList<Evento> lista = new ArrayList<Evento>();
+
+        String q = "SELECT * FROM TAREAS WHERE fecha_t = '" + dia + "'";
+        Cursor registros = db.rawQuery(q, null);
+
+        if (registros.moveToFirst()) {
+            do {
+                // Preparamos valores
+                String nombre = registros.getString(1);
+                String fecha = registros.getString(2);
+                String hora = registros.getString(3);
+                String descripcion = registros.getString(4);
+
+                // Creamos objeto
+                Evento obj = new Evento(nombre, fecha, hora, descripcion);
+
+                // Guardamos objeto a la lista
+                lista.add(obj);
+            } while (registros.moveToNext());
+        }
+        return lista;
+    }
 //Devuelve solo una
     public Evento devuelveTarea(int id) {
         String q = "SELECT * FROM TAREAS WHERE _id = '"+id+"'";
