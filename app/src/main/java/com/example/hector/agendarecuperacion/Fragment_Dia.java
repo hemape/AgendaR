@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 
 /**
@@ -20,6 +24,10 @@ import android.view.ViewGroup;
 public class Fragment_Dia extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Variables
+    RecyclerView rv;
+    ArrayList<Evento> eventos;
+    MyDBAdapter bbdd;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -60,28 +68,38 @@ public class Fragment_Dia extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment__dia, container, false);
+        View v = inflater.inflate(R.layout.fragment_fragment__dia, container, false);
+
+        // Elementos Vista
+        rv = (RecyclerView) v.findViewById(R.id.recylcerDiaDetalle);
+
+        // Añadir valores prueba
+        eventos = new ArrayList<Evento>();
+        // Cargar BBDD
+        bbdd = new MyDBAdapter(getContext());
+
+        // Cargar valores BBDD
+        eventos = bbdd.TareasDia(mParam1);
+
+        // Usar un administrador para LinearLayout
+        LinearLayoutManager lManager = new LinearLayoutManager(getContext());
+        rv.setLayoutManager(lManager);
+
+        // Generar adaptador y conectamos
+        AdapterRecyler ad = new AdapterRecyler(eventos);
+        rv.setAdapter(ad);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
         }
     }
 
