@@ -1,17 +1,30 @@
 package com.example.hector.agendarecuperacion;
 
+import android.util.Log;
+
 public class Evento {
          // Variables
+        private Integer id;
         private String nombre;
         private String fecha;
         private String hora;
         private String descripcion;
 
-        public Evento(String nombre, String fecha, String hora, String descripcion) {
+        public Evento(Integer idT ,String nombre, String fecha, String hora, String descripcion) {
+            this.id=idT;
+
             this.nombre = nombre;
             this.fecha = fecha;
             this.hora = hora;
             this.descripcion = descripcion;
+        }
+        public int getId(){
+            try{
+                return id.intValue();
+            }catch (NullPointerException npe){
+                Log.d("Hector", "L'id de tasca es null");
+                return -0;
+            }
         }
 
         public String getNombre() {

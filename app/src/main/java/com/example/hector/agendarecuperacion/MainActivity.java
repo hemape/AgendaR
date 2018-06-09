@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentPrincipal.ComunicaFragmentPrincipalAmbActivity, Fragment_Dia.ComunicaDetallTascaAmbActivity {
 
     FragmentManager fm;
     FragmentTransaction ft;
@@ -127,5 +127,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void carregaDetallTascaFragment(Integer id){
+
+        fm = getSupportFragmentManager();
+
+        ft = fm.beginTransaction();
+
+        ft.replace(R.id.fragmentBase, Fragment_Dia.newInstance(id));
+        ft.addToBackStack(null);
+        ft.commit();
+    }
 
 }

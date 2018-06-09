@@ -35,7 +35,7 @@ public class Fragment_Dia extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private AnyadirTarea.OnFragmentInteractionListener mListener;
 
     public Fragment_Dia() {
         // Required empty public constructor
@@ -78,29 +78,21 @@ public class Fragment_Dia extends Fragment {
         rv = (RecyclerView) v.findViewById(R.id.recylcerDiaDetalle);
 
         // Añadir valores prueba
-        eventos = new ArrayList<Evento>();
+        Evento e;
         // Cargar BBDD
         bbdd = new MyDBAdapter(getContext());
 
         // Cargar valores BBDD
-        eventos = bbdd.TareasDia(mParam1);
+        e = bbdd.devuelveTarea(identificadorTasca);
 
         // Usar un administrador para LinearLayout
         LinearLayoutManager lManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(lManager);
 
         // Generar adaptador y conectamos
-        AdapterRecyler ad = new AdapterRecyler(eventos);
-        rv.setAdapter(ad);
+
 
         return v;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -119,7 +111,7 @@ public class Fragment_Dia extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface ComunicaDetallTascaAmbActivity {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }

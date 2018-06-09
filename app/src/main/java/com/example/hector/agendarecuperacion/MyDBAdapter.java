@@ -71,7 +71,7 @@ public class MyDBAdapter {
     public ArrayList llenar_Tarea() {
         ArrayList<Evento> lista = new ArrayList<Evento>();
 
-        String q = "SELECT * FROM TAREAS";
+        String q = "SELECT * FROM TAREAS ORDER BY fecha_t";
         Cursor registros = db.rawQuery(q, null);
 
         if (registros.moveToFirst()) {

@@ -141,6 +141,7 @@ public class AnyadirTarea extends Fragment {
         String textohora= hora.getText().toString();
         String textodescripcion= descripcion.getText().toString();
         String nombre="";
+    //    Integer id = null;
 
     Evento objeto = new Evento(nombre, textofecha, textohora, textodescripcion);
         bbdd.guardarTarea(objeto);

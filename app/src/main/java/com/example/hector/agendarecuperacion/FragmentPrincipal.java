@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentPrincipal.OnFragmentInteractionListener} interface
+
  * to handle interaction events.
  * Use the {@link FragmentPrincipal#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,7 +37,8 @@ public class FragmentPrincipal extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private AdapterRecyler.ComunicaAdaptadorAmbFragmentPrincipal mListener;
+
 
     public FragmentPrincipal() {
         // Required empty public constructor
@@ -92,9 +93,14 @@ public class FragmentPrincipal extends Fragment {
         rv.setLayoutManager(lManager);
 
         // Generamos adaptador y conectamos
-        AdapterRecyler ad = new AdapterRecyler(eventos);
+        AdapterRecyler.ComunicaAdaptadorAmbFragmentPrincipal comunicador = new AdapterRecyler.ComunicaAdaptadorAmbFragmentPrincipal() {
+            @Override
+            public void UsuariHaTriatUnaTasca(Integer idTasca) {
+                mListener.carregaDetallTascaFragment(idTasca);
+            }
+        };
+        AdapterRecyler ad = new AdapterRecyler(eventos, comunicador);
         rv.setAdapter(ad);
-
 
         return v;
     }
@@ -122,8 +128,11 @@ public class FragmentPrincipal extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+
+    public interface ComunicaFragmentPrincipalAmbActivity {
+        void carregaDetallTascaFragment(Integer id);
     }
+
+
 }
