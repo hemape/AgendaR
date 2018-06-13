@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Eixir) {
-            // Handle the camera action
-        } else if (id == R.id.nav_sobreApp) {
 
+        } else if (id == R.id.nav_sobreApp) {
+            new MydialogFragment().show(getFragmentManager(), "");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
